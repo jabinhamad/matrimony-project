@@ -1,0 +1,6 @@
+
+RewriteEngine On
+RewriteBase /matrimony/
+
+# Route /mailotp to mailotp.php (no extension)
+RewriteRule ^mailotp$ mailotp.php [QSA,L]

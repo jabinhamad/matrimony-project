@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Phone OTP Verification</title>
+</head>
+<body>
+
+  <h2>Phone Number Verification</h2>
+
+  <label for="phone">Phone Number:</label><br>
+  <input type="tel" id="phone" placeholder="Enter 10-digit phone number" pattern="[0-9]{10}" required><br><br>
+
+  <button onclick="sendOTP()">Get OTP</button>
+
+  <p id="response"></p>
+
+  <script>
+    function sendOTP() {
+      const phone = document.getElementById("phone").value;
+
+      // Validate phone number
+      if (!/^\d{10}$/.test(phone)) {
+        alert("Please enter a valid 10-digit phone number.");
+        return;
+      }
+
+      // Send OTP via PHP
+      fetch("m.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: "phone=" + encodeURIComponent(phone)
+      })
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("response").innerText = data;
+      })
+      .catch(error => {
+        document.getElementById("response").innerText = "Error sending OTP";
+        console.error("Error:", error);
+      });
+    }
+  </script>
+
+</body>
+</html>
